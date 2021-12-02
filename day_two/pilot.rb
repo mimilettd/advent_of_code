@@ -1,7 +1,7 @@
 file = File.open(File.join(File.dirname(__FILE__), 'input.txt'))
 
 command_data = file.readlines.map(&:chomp)
-course = { horizontal_position: 0, depth: 0 }
+course = { horizontal_position: 0, depth: 0, aim: 0 }
 
 command_data[0..-1].each_index do |i|
   command = command_data[i].split(" ")
@@ -10,11 +10,12 @@ command_data[0..-1].each_index do |i|
   case direction
   when "forward"
     course[:horizontal_position] += units
+    course[:depth] += (course[:aim] * units)
   when "down"
-    course[:depth] += units
+    course[:aim] += units
   when "up"
-    course[:depth] -= units
+    course[:aim] -= units
   end
 end
 
-puts course[:horizontal_position]*course[:depth]
+puts course[:horizontal_position] * course[:depth]
